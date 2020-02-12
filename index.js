@@ -1,7 +1,11 @@
 const express = require('express');
+const connectDB = require('./config/db');
 
 // Create the server
 const app = express();
+
+// DB Connection
+connectDB();
 
 // Server port
 const PORT = process.env.PORT || 4000;
