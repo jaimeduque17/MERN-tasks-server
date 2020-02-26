@@ -1,8 +1,8 @@
 // Routes to auth users
 const express = require('express');
 const router = express.Router();
-const { check } = require('express-validator');
 const authController = require('../controllers/authController');
+const { check } = require('express-validator');
 
 // Create an user
 // api/auth

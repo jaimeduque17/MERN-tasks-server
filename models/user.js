@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 mongoose.set('useCreateIndex', true);
-mongoose.connect(config.dbUri, { useNewUrlParser: true })
 
 const UsersSchema = mongoose.Schema({
     name: {
