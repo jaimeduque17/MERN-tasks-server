@@ -18,14 +18,14 @@ exports.authUser = async (req, res) => {
         // Check that it is a registered user
         let user = await User.findOne({ email });
 
-        if(!user) {
-            return res.status(400).json({msg: 'The user does not exist'});
+        if (!user) {
+            return res.status(400).json({ msg: 'The user does not exist' });
         }
 
         // Check password
         const passOk = await bcryptjs.compare(password, user.password);
-        if(!passOk) {
-            return res.status(400).json({msg: 'Correct password'});
+        if (!passOk) {
+            return res.status(400).json({ msg: 'Correct password' });
         }
 
         // Create and sign the JWT
@@ -39,7 +39,7 @@ exports.authUser = async (req, res) => {
         jwt.sign(payload, process.env.SECRET, {
             expiresIn: 3600 // 3.600 seg = 1 hour
         }, (error, token) => {
-            if(error) throw error;
+            if (error) throw error;
 
             // Confirmation message
             res.json({ token });
@@ -47,5 +47,16 @@ exports.authUser = async (req, res) => {
 
     } catch (error) {
         console.log(error);
+    }
+}
+
+// Get authenticated user
+exports.userAuthenticated = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        res.json({ user });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: 'There was an error' });
     }
 }
