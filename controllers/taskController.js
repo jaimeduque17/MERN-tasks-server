@@ -54,7 +54,7 @@ exports.getTasks = async (req, res) => {
         }
 
         // Get tasks by project
-        const tasks = await Task.find({ project });
+        const tasks = await Task.find({ project }).sort({ createdAt: -1 });
         res.json({ tasks });
 
     } catch (error) {
