@@ -41,7 +41,7 @@ exports.createTask = async (req, res) => {
 exports.getTasks = async (req, res) => {
     try {
         // Extract the project and verify is if exist
-        const { project } = req.body;
+        const { project } = req.query;
 
         const existProject = await Project.findById(project);
         if (!existProject) {
@@ -53,7 +53,7 @@ exports.getTasks = async (req, res) => {
             return res.status(401).json({ msg: 'Not authorized' });
         }
 
-        // Get tasks bt project
+        // Get tasks by project
         const tasks = await Task.find({ project });
         res.json({ tasks });
 
@@ -110,7 +110,7 @@ exports.updateTask = async (req, res) => {
 exports.deleteTask = async (req, res) => {
     try {
         // Extract the project and verify is if exist
-        const { project } = req.body;
+        const { project } = req.query;
 
         // If the task exist or not
         let task = await Task.findById(req.params.id);
@@ -129,7 +129,7 @@ exports.deleteTask = async (req, res) => {
 
         // Delete
         await Task.findOneAndRemove({ _id: req.params.id });
-        res.json({msg: 'Deleted task'});
+        res.json({ msg: 'Deleted task' });
 
     } catch (error) {
         console.log(error);
